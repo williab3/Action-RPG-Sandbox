@@ -1,15 +1,28 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class EntityState : MonoBehaviour
+public class EntityState 
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected StateMachine stateMachine;
+
+    public EntityState(StateMachine sm)
     {
-        
+        stateMachine = sm;
     }
 
-    // Update is called once per frame
-    void Update()
+    // Called when the state is entered
+    public virtual void Enter() 
+    {
+
+    }
+    // Called when the state is exited
+    public virtual void Exit() 
+    {
+
+    }
+
+    // Called every frame the state is active
+    public virtual void Update() 
     {
         
     }
