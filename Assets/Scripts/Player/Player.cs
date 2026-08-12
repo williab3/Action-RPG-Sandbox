@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    StateController stateController;
+    EntityState Idle;
+
+    void Awake()
+    {
+        stateController = new StateController();
+    }
+    
     void Start()
     {
-        
+        stateController.Initialize(Idle);
     }
-
     // Update is called once per frame
     void Update()
     {
-        
+        stateController.CurrentState.Update();
     }
 }
