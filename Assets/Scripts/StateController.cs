@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MachineState 
+public class StateController 
 {
     public EntityState CurrentState { get; private set; }
 
