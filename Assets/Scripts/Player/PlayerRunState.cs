@@ -13,15 +13,26 @@ public class PlayerRunState : EntityState
         player = _player;
     }
 
+
+    public override void Enter()
+    {
+        base.Enter();
+        player.PlayerAnimator.SetBool(animXParam, true);
+    }
     public override void Update()
     {
-        base.Update();
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (player.inputValue.x == 0)
         {
-            // Transition to jump state
-            //controller.ChangeState(player.ju);
+            // Transition to Idle state if the player is not moving
+            controller.ChangeState(player.Idle);
         }
+    }
+
+    public override void Exit()
+    {
+
+        player.PlayerAnimator.SetBool(animXParam, false);
+        //controller.ChangeState(player.Idle);
     }
 }
 

@@ -8,13 +8,24 @@ public class PlayerIdleState : EntityState
         player = _player;
     }
 
+    public override void Enter()
+    {
+        Debug.Log($"Entering Idle state: {animXParam} is true");
+        player.PlayerAnimator.SetBool(animXParam, true);
+    }
+
     public override void Update()
     {
-        base.Update();
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (player.inputValue.x != 0)
         {
             // Transition to run state
             controller.ChangeState(player.Run);
         }
+    }
+
+    public override void Exit()
+    {
+        Debug.Log($"Exiting Idle state: {animXParam} is false");
+        player.PlayerAnimator.SetBool(animXParam, false);
     }
 }
