@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     public PlayerJumpStatee Jump { get; private set; }
     public Vector2 inputValue;
     public Animator PlayerAnimator { get; private set; }
+    public Rigidbody2D PhysicalBody { get; private set; }
+    public float MoveSpeed = 5f;
 
     StateController stateController;
     PlayerInputSet inputActions;
@@ -15,6 +17,7 @@ public class Player : MonoBehaviour
         PlayerAnimator = GetComponentInChildren<Animator>();
         inputActions = new PlayerInputSet();
         stateController = new StateController();
+        PhysicalBody = GetComponent<Rigidbody2D>();
         Idle = new PlayerIdleState(this, stateController, "isIdle");
         Run = new PlayerRunState(this, stateController, "isRunning");
         Jump = new PlayerJumpStatee(this, stateController, "isJumping");
@@ -22,7 +25,6 @@ public class Player : MonoBehaviour
     
     void OnEnable()
     {
-        // Enable the input actions when the player is enabled (when game/round starts)
         inputActions.Enable();
         
     }
@@ -52,5 +54,10 @@ public class Player : MonoBehaviour
         };
 
         stateController.CurrentState.Update();
+    }
+
+    public void SetVelocity(float xVelocity, float yVelocity)
+    {
+        PhysicalBody.linearVelocity = new Vector2(xVelocity, yVelocity);
     }
 }
