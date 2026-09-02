@@ -30,9 +30,7 @@ public class PlayerRunState : EntityState
 
     public override void Exit()
     {
-
         player.PlayerAnimator.SetBool(animXParam, false);
-        //controller.ChangeState(player.Idle);
     }
 }
 
