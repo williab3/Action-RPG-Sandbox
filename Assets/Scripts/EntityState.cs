@@ -8,10 +8,10 @@ public abstract class EntityState
     protected string animXParam;
 
 
-    public EntityState(StateController _controller, string v)
+    public EntityState(StateController _controller, string paramName)
     {
         this.controller = _controller;
-        this.animXParam = v;
+        this.animXParam = paramName;
     }
 
     // Called when the state is entered
