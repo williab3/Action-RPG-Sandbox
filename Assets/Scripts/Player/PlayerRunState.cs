@@ -27,6 +27,15 @@ public class PlayerRunState : EntityState
             // Transition to Idle state if the player is not moving
             controller.ChangeState(player.Idle);
         }
+
+        if(player.isFacingRight && player.inputValue.x < 0)
+        {
+            player.turnAround();
+        }
+        else if(!player.isFacingRight && player.inputValue.x > 0)
+        {
+            player.turnAround();
+        }
     }
 
     public override void Exit()

@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
     public Animator PlayerAnimator { get; private set; }
     public Rigidbody2D PhysicalBody { get; private set; }
     public float MoveSpeed = 5f;
+    public bool isFacingRight { get; private set; } = true;
 
     StateController stateController;
     PlayerInputSet inputActions;
+
     void Awake()
     {
         PlayerAnimator = GetComponentInChildren<Animator>();
@@ -63,4 +65,10 @@ public class Player : MonoBehaviour
         PhysicalBody.linearVelocity = new Vector2(xVelocity, yVelocity);
     }
 
+
+    public void turnAround()
+    {
+        transform.Rotate(0, 180, 0);
+        isFacingRight = !isFacingRight;
+    }
 }
