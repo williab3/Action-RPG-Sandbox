@@ -20,7 +20,7 @@
                 {
                     "name": "2D Vector",
                     "id": "6ae97234-d762-41d5-b629-00bdfd726617",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -87,6 +87,17 @@
                 },
                 {
                     "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Skeleton",
+            "bindingGroup": "Skeleton",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
                     "isOptional": false,
                     "isOR": false
                 }

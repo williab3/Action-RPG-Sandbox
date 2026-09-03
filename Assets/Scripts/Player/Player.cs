@@ -26,6 +26,17 @@ public class Player : MonoBehaviour
     void OnEnable()
     {
         inputActions.Enable();
+        //inputActions.Player.Run.performed += ctx =>
+        //{
+        //    // Read the input value when the run action is performed
+        //    inputValue = ctx.ReadValue<Vector2>();
+        //};
+
+        //inputActions.Player.Run.canceled += ctx =>
+        //{
+        //    // Reset the input value to zero when the run action is canceled
+        //    inputValue = Vector2.zero;
+        //};
         
     }
 
@@ -41,23 +52,27 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        inputActions.Player.Run.performed += ctx =>
-        {
-            // Read the input value when the run action is performed
-            inputValue = ctx.ReadValue<Vector2>();
-        };
+        // Poll every frame (this ensures held input stays available)
+        var runAction = inputActions.Player.Run;
+        inputValue = runAction.ReadValue<Vector2>();
 
-        inputActions.Player.Run.canceled += ctx =>
-        {
-            // Reset the input value to zero when the run action is canceled
-            inputValue = Vector2.zero;
-        };
+        // Debug the input action phase and its value to see when it drops to zero
+        // Remove or comment out these logs when done debugging
+        Debug.Log($"Run.phase={runAction.phase} value={inputValue} Player.inputValue.x={inputValue.x}");
 
         stateController.CurrentState.Update();
     }
 
+    void FixedUpdate()
+    {
+        // Apply movement in physics loop
+        float vx = inputValue.x * MoveSpeed;
+        PhysicalBody.velocity = new Vector2(vx, PhysicalBody.velocity.y);
+    }
+
     public void SetVelocity(float xVelocity, float yVelocity)
     {
-        PhysicalBody.linearVelocity = new Vector2(xVelocity, yVelocity);
+        PhysicalBody.velocity = new Vector2(xVelocity, yVelocity);
     }
+
 }

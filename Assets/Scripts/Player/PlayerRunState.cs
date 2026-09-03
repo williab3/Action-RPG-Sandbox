@@ -18,11 +18,13 @@ public class PlayerRunState : EntityState
     {
         base.Enter();
         player.PlayerAnimator.SetBool(animXParam, true);
+        player.SetVelocity(player.inputValue.x * player.MoveSpeed, player.PhysicalBody.linearVelocity.y);
     }
     public override void Update()
     {
         if (player.inputValue.x == 0)
         {
+            player.SetVelocity(0, 0);
             // Transition to Idle state if the player is not moving
             controller.ChangeState(player.Idle);
         }
