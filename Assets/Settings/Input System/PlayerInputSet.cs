@@ -26,7 +26,7 @@ using UnityEngine.InputSystem.Utilities;
 /// using namespace UnityEngine;
 /// using UnityEngine.InputSystem;
 ///
-/// // Example of using an InputActionMap named "Player" from a UnityEngine.MonoBehaviour implementing callback interface.
+/// // Example of using an InputActionMap named "player" from a UnityEngine.MonoBehaviour implementing callback interface.
 /// public class Example : MonoBehaviour, MyActions.IPlayerActions
 /// {
 ///     private MyActions_Actions m_Actions;                  // Source code representation of asset.
@@ -35,7 +35,7 @@ using UnityEngine.InputSystem.Utilities;
 ///     void Awake()
 ///     {
 ///         m_Actions = new MyActions_Actions();              // Create asset object.
-///         m_Player = m_Actions.Player;                      // Extract action map object.
+///         m_Player = m_Actions.player;                      // Extract action map object.
 ///         m_Player.AddCallbacks(this);                      // Register callback interface IPlayerActions.
 ///     }
 ///
@@ -89,7 +89,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputSet"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""player"",
             ""id"": ""d9073462-2191-4d73-a407-e13c58a2e2af"",
             ""actions"": [
                 {
@@ -100,6 +100,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd20de0d-47b7-44af-8c54-681587cccd08"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -157,6 +166,17 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4dbfe5d7-ba99-4cda-aad7-8dab28f72220"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -191,14 +211,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        // player
+        m_Player = asset.FindActionMap("player", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputSet.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputSet.player.Disable() has not been called.");
     }
 
     /// <summary>
@@ -271,12 +292,13 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
+    // player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Run;
+    private readonly InputAction m_Player_Jump;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Player".
+    /// Provides access to input actions defined in input action map "player".
     /// </summary>
     public struct PlayerActions
     {
@@ -287,9 +309,13 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActions(@PlayerInputSet wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/Run".
+        /// Provides access to the underlying input action "player/Run".
         /// </summary>
         public InputAction @Run => m_Wrapper.m_Player_Run;
+        /// <summary>
+        /// Provides access to the underlying input action "player/Jump".
+        /// </summary>
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -319,6 +345,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
         /// <summary>
@@ -333,6 +362,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
         /// <summary>
@@ -393,7 +425,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         }
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "player" which allows adding and removing callbacks.
     /// </summary>
     /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
     /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
@@ -406,5 +438,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRun(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnJump(InputAction.CallbackContext context);
     }
 }
