@@ -1,14 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class EntityState 
+public abstract class ChracterState 
 {
     protected string stateName;
     protected StateController controller;
     protected string animXParam;
 
 
-    public EntityState(StateController _controller, string paramName)
+    public ChracterState(StateController _controller, string paramName)
     {
         this.controller = _controller;
         this.animXParam = paramName;
