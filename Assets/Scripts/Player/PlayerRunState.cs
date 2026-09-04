@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerRunState : EntityState
+public class PlayerRunState : ChracterState
 {
     Player player;
     public PlayerRunState(global::Player _player, StateController _controller, string v) : base(_controller, v)

@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class StateController 
 {
-    public EntityState CurrentState { get; private set; }
+    public ChracterState CurrentState { get; private set; }
 
-    public void Initialize(EntityState initialState)
+    public void Initialize(ChracterState initialState)
     {
         CurrentState = initialState;
         CurrentState.Enter();
     }
 
-    public void ChangeState(EntityState newState)
+    public void ChangeState(ChracterState newState)
     {
         CurrentState.Exit();
         CurrentState = newState;

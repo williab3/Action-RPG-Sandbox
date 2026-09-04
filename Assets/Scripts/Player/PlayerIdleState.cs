@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerIdleState : EntityState
+public class PlayerIdleState : ChracterState
 {
     Player player;
     public PlayerIdleState(Player _player, StateController controller, string v) : base(controller, v)
