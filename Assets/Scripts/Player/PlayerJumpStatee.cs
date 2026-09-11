@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerJumpStatee : EntityState
+public class PlayerJumpStatee : CharacterState
 {
     Player player;
     public PlayerJumpStatee(Player _player, StateController controller, string v) : base(controller, v)

@@ -25,10 +25,17 @@ public class JumpUtilities
         }
     }
 
-    public void OnDrawGizmos()
+    public bool canJump()
     {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(player.transform.position, player.transform.position + Vector3.down * player.DistanceToGround);
+        //TODO: let's ensure that there some kind of time delay before the jump for smoother control for when the user is holding the jump button 
+        return Physics2D.Raycast(player.transform.position, Vector2.down, player.DistanceToGround, player.GroundLayer);
+    }
+
+    public void MeasureCharacterHeight()
+    {
+        Debug.DrawLine(player.transform.position, player.transform.position + Vector3.down,  Color.magenta, player.DistanceToGround, false);
+        //Gizmos.color = Color.magenta;
+        //Gizmos.DrawLine(player.transform.position, player.transform.position + Vector3.down * player.DistanceToGround);
         //Gizmos.DrawSphere(attackPoint.position, attackRange);
     }
 

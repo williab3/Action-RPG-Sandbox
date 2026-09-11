@@ -1,14 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class ChracterState 
+public abstract class CharacterState 
 {
     protected string stateName;
     protected StateController controller;
     protected string animXParam;
 
 
-    public ChracterState(StateController _controller, string paramName)
+    public CharacterState(StateController _controller, string paramName)
     {
         this.controller = _controller;
         this.animXParam = paramName;

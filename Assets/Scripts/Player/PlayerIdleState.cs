@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class PlayerIdleState : ChracterState
+public class PlayerIdleState : CharacterState
 {
     Player player;
+    JumpUtilities jumpAction;
     public PlayerIdleState(Player _player, StateController controller, string v) : base(controller, v)
     {
         player = _player;
+        jumpAction = new JumpUtilities(player);
     }
 
     public override void Enter()
@@ -21,6 +23,8 @@ public class PlayerIdleState : ChracterState
             // Transition to run state
             controller.ChangeState(player.Run);
         }
+
+        jumpAction.ButtonPressed();
     }
 
     public override void Exit()
