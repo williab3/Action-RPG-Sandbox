@@ -10,19 +10,26 @@ public class Player : MonoBehaviour
     public Rigidbody2D PhysicalBody { get; private set; }
     public float MoveSpeed = 5f;
     public bool isFacingRight { get; private set; } = true;
+    public PlayerInputSet inputActions { get; private set; }
+    public LayerMask GroundLayer { get; private set; }
+    [SerializeField]
+    public bool IsOnGround;
+
+    public float DistanceToGround  = 1f;
 
     StateController stateController;
-    PlayerInputSet inputActions;
+    JumpUtilities jumpCoordinator;
 
     void Awake()
     {
-        PlayerAnimator = GetComponentInChildren<Animator>();
         inputActions = new PlayerInputSet();
+        PlayerAnimator = GetComponentInChildren<Animator>();
         stateController = new StateController();
         PhysicalBody = GetComponent<Rigidbody2D>();
         Idle = new PlayerIdleState(this, stateController, "isIdle");
         Run = new PlayerRunState(this, stateController, "isRunning");
         Jump = new PlayerJumpStatee(this, stateController, "isJumping");
+        jumpCoordinator = new JumpUtilities(this);
     }
     
     void OnEnable()
@@ -52,6 +59,13 @@ public class Player : MonoBehaviour
         stateController.Initialize(Idle);
     }
 
+    void Update()
+   {
+        jumpCoordinator.MeasureCharacterHeight();
+        IsOnGround = jumpCoordinator.canJump();
+
+        Debug.Log("Distance to ground: " + DistanceToGround);
+    }
 
     void FixedUpdate()
     {
@@ -71,4 +85,5 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 180, 0);
         isFacingRight = !isFacingRight;
     }
+
 }
