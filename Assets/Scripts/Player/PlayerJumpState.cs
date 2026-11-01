@@ -13,10 +13,6 @@ public class PlayerJumpState : CharacterState
     {
         base.Update();
         // Implement jump logic here
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Transition to jump state
-            Debug.Log("Jump button was pressed in JumpState");
-        }
+
     }
 }

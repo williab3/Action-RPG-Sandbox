@@ -8,9 +8,11 @@ using UnityEngine;
 public class PlayerRunState : CharacterState
 {
     Player player;
+    JumpUtilities jumpHelper;
     public PlayerRunState(global::Player _player, StateController _controller, string v) : base(_controller, v)
     {
         player = _player;
+        jumpHelper = new JumpUtilities(player);
     }
 
 
@@ -36,6 +38,8 @@ public class PlayerRunState : CharacterState
         {
             player.turnAround();
         }
+
+        jumpHelper.TransferToJumpSate(controller, "Run");
     }
 
     public override void Exit()
