@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
     public PlayerIdleState Idle { get; private set; }
     public PlayerRunState Run { get; private set; }
     public PlayerJumpState Jump { get; private set; }
-    public Vector2 inputValue;
+    public PlayerFallState Fall { get; private set; }
     public Animator PlayerAnimator { get; private set; }
     public Rigidbody2D PhysicalBody { get; private set; }
     public float MoveSpeed = 5f;
