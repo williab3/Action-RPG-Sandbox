@@ -12,8 +12,8 @@ public class PlayerIdleState : CharacterState
 
     public override void Enter()
     {
-        Debug.Log($"Entering Idle state: {animXParam} is true");
-        player.PlayerAnimator.SetBool(animXParam, true);
+        Debug.Log($"Entering Idle state: {animParam} is true");
+        player.PlayerAnimator.SetBool(animParam, true);
     }
 
     public override void Update()
@@ -28,7 +28,7 @@ public class PlayerIdleState : CharacterState
 
     public override void Exit()
     {
-        Debug.Log($"Exiting Idle state: {animXParam} is false");
-        player.PlayerAnimator.SetBool(animXParam, false);
+        Debug.Log($"Exiting Idle state: {animParam} is false");
+        player.PlayerAnimator.SetBool(animParam, false);
     }
 }

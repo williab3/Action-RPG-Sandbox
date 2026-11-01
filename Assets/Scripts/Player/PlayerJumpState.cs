@@ -9,10 +9,26 @@ public class PlayerJumpState : CharacterState
         player = _player;
         jumpHelper = new JumpUtilities(player);
     }
+
+    public override void Enter()
+    {
+        base.Enter();
+        Debug.Log($"Entering Jump state: y velocity is {animParam}");
+        //player.PlayerAnimator.SetBool(animParam, true);
+        // Implement jump logic here
+        // For example, you can apply an upward force to the player's Rigidbody2D
+        //player.PhysicalBody.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); // Adjust the force as needed
+        player.PlayerAnimator.SetBool("isJumping", true);
+        player.SetVelocity(player.PhysicalBody.linearVelocity.x, player.JumpForce);
+    }
     public override void Update()
     {
         base.Update();
-        // Implement jump logic here
+        if (player.PhysicalBody.linearVelocity.y < 0)
+        {
+            // Transition to Fall state if the player is grounded
+            controller.ChangeState(player.Fall);
+        }
 
     }
 }

@@ -13,7 +13,10 @@ public class PlayerFallState : CharacterState
     public override void Update()
     {
         base.Update();
-
+        if (player.IsOnGround)
+        {
+            controller.ChangeState(player.Idle);
+        }
         //if player is grounded, transition to idle state
     }
 

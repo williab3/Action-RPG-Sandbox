@@ -644,7 +644,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   inputValue: {x: 0, y: 0}
   MoveSpeed: 5
-  DistanceToGround: 0.1
+  IsOnGround: 0
+  DistanceToGround: 1.63
 --- !u!4 &1847605217
 Transform:
   m_ObjectHideFlags: 0

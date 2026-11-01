@@ -30,11 +30,10 @@ public class JumpUtilities
     {
         // Cast a 2D ray down and return whether we hit a collider on the ground layer.
         // Use the RaycastHit2D so we can inspect the result and draw an accurate debug line.
-        Vector2 origin = player.transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, player.DistanceToGround, player.GroundLayer);
+
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position, Vector2.down, player.DistanceToGround, player.GroundLayer);
         // Draw the ray to the hit point when present, otherwise draw the full distance.
-        Vector3 end = hit.collider != null ? (Vector3)hit.point : player.transform.position + Vector3.down * player.DistanceToGround;
-        Debug.DrawLine(player.transform.position, end, Color.magenta, 0f, false);
+
         return hit.collider != null;
     }
 

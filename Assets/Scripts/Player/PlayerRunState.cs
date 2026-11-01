@@ -19,7 +19,7 @@ public class PlayerRunState : CharacterState
     public override void Enter()
     {
         base.Enter();
-        player.PlayerAnimator.SetBool(animXParam, true);
+        player.PlayerAnimator.SetBool(animParam, true);
     }
     public override void Update()
     {
@@ -44,7 +44,7 @@ public class PlayerRunState : CharacterState
 
     public override void Exit()
     {
-        player.PlayerAnimator.SetBool(animXParam, false);
+        player.PlayerAnimator.SetBool(animParam, false);
     }
 }
 
