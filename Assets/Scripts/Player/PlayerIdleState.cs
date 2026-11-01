@@ -23,8 +23,10 @@ public class PlayerIdleState : CharacterState
             // Transition to run state
             controller.ChangeState(player.Run);
         }
-
-        jumpAction.ButtonPressed();
+        if (player.inputActions.Player.Jump.WasPerformedThisFrame())
+        {
+            controller.ChangeState(player.Jump);
+        }
     }
 
     public override void Exit()
