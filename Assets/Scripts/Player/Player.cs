@@ -4,7 +4,7 @@ public class Player : MonoBehaviour
 {
     public PlayerIdleState Idle { get; private set; }
     public PlayerRunState Run { get; private set; }
-    public PlayerJumpStatee Jump { get; private set; }
+    public PlayerJumpState Jump { get; private set; }
     public Vector2 inputValue;
     public Animator PlayerAnimator { get; private set; }
     public Rigidbody2D PhysicalBody { get; private set; }
@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     public bool IsOnGround;
 
-    public float DistanceToGround  = 1f;
+    public float DistanceToGround  = 2f;
 
     StateController stateController;
     JumpUtilities jumpCoordinator;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         PhysicalBody = GetComponent<Rigidbody2D>();
         Idle = new PlayerIdleState(this, stateController, "isIdle");
         Run = new PlayerRunState(this, stateController, "isRunning");
-        Jump = new PlayerJumpStatee(this, stateController, "isJumping");
+        Jump = new PlayerJumpState(this, stateController, "isJumping");
         jumpCoordinator = new JumpUtilities(this);
     }
     
