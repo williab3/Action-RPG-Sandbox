@@ -36,6 +36,6 @@ public class PlayerJumpState : CharacterState
     public override void Exit()
     {
         base.Exit();
-        player.PlayerAnimator.SetBool("isJumping", false);
+        //player.PlayerAnimator.SetBool("isJumping", false);
     }
 }

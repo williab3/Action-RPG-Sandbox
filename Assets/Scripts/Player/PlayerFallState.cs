@@ -12,16 +12,19 @@ public class PlayerFallState : CharacterState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log($"Entering Fall state: y velocity is {player.PhysicalBody.linearVelocity.y}");
+        Debug.Log($"Entering Fall state: {animParam} is {player.PhysicalBody.linearVelocity.y}");
         player.PlayerAnimator.SetFloat(animParam, player.PhysicalBody.linearVelocity.y);
     }
 
     public override void Update()
     {
+        player.PlayerAnimator.SetFloat(animParam, player.PhysicalBody.linearVelocity.y);
+
         base.Update();
         if (player.IsOnGround)
         {
             Debug.Log("Player is grounded, transitioning to Idle state.");
+            player.PlayerAnimator.SetBool("isJumping", false);
             controller.ChangeState(player.Idle);
         }
         //if player is grounded, transition to idle state
