@@ -27,8 +27,15 @@ public class PlayerJumpState : CharacterState
         if (player.PhysicalBody.linearVelocity.y < 0)
         {
             // Transition to Fall state if the player is grounded
+            Debug.Log("Player is falling, transitioning to Fall state.");
             controller.ChangeState(player.Fall);
         }
 
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        player.PlayerAnimator.SetBool("isJumping", false);
     }
 }
