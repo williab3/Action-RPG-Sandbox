@@ -15,14 +15,20 @@ public class Player : MonoBehaviour
     public LayerMask GroundLayer;
     [Header("Movement Details")]
     public float MoveSpeed = 5f;
-    public float JumpForce = 6f;
     public bool isFacingRight { get; private set; } = true;
     public PlayerInputSet inputActions { get; private set; }
-    public Vector2 inputValue;
+    public bool IsJumping { get; internal set; }
 
+    public Vector2 inputValue;
+    [Header("InitialJump Details")]
+    public float InitialJumpForce = 6f;
+    public float maxJumpHoldTime = 3f;
+    public float MaxJumpHoldTime = 0.3f;
+    public float jumpHoldAcceleration = 2f;
+    
 
     StateController stateController;
-    JumpUtilities jumpCoordinator;
+    public JumpUtilities JumpCoordinator;
 
 
     //private void OnDrawGizmos()
@@ -41,7 +47,7 @@ public class Player : MonoBehaviour
         Run = new PlayerRunState(this, stateController, "isRunning");
         Jump = new PlayerJumpState(this, stateController, "yVelocity");
         Fall = new PlayerFallState(this, stateController, "yVelocity");
-        jumpCoordinator = new JumpUtilities(this);
+        JumpCoordinator = new JumpUtilities(this);
         GroundLayer = LayerMask.GetMask("Ground");
     }
     
@@ -74,8 +80,7 @@ public class Player : MonoBehaviour
 
     void Update()
    {
-        jumpCoordinator.MeasureCharacterHeight();
-        IsOnGround = jumpCoordinator.canJump();
+        IsOnGround = JumpCoordinator.canJump();
         stateController.CurrentState.Update();
         PlayerAnimator.SetFloat("yVelocity", PhysicalBody.linearVelocity.y);
 
