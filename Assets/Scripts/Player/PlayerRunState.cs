@@ -8,11 +8,9 @@ using UnityEngine;
 public class PlayerRunState : CharacterState
 {
     Player player;
-    JumpUtilities jumpHelper;
     public PlayerRunState(global::Player _player, StateController _controller, string v) : base(_controller, v)
     {
         player = _player;
-        jumpHelper = new JumpUtilities(player);
     }
 
 
@@ -20,6 +18,7 @@ public class PlayerRunState : CharacterState
     {
         base.Enter();
         player.PlayerAnimator.SetBool(animParam, true);
+        Debug.Log($"Entering Run state");
     }
     public override void Update()
     {
@@ -39,7 +38,11 @@ public class PlayerRunState : CharacterState
             player.turnAround();
         }
 
-        jumpHelper.TransferToJumpSate(controller, "Run");
+        if(player.inputActions.Player.Jump.WasPressedThisFrame())
+        {
+            Debug.Log("InitialJump button pressed, transitioning to InitialJump state from Run");
+            controller.ChangeState(player.Jump);
+        }
     }
 
     public override void Exit()
