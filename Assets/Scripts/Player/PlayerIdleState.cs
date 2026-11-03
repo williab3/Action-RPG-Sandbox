@@ -22,8 +22,13 @@ public class PlayerIdleState : CharacterState
         {
             // Transition to run state
             controller.ChangeState(player.Run);
+            Debug.Log("Player is moving, transitioning to Run state from Idle");
         }
-        jumpAction.TransferToJumpSate(controller, "Idle");
+        if (player.inputActions.Player.Jump.WasPressedThisFrame())
+        {
+            Debug.Log("InitialJump button pressed, transitioning to InitialJump state from Idle");
+            controller.ChangeState(player.Jump);
+        }
     }
 
     public override void Exit()
