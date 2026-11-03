@@ -13,17 +13,17 @@ public class PlayerJumpState : CharacterState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log($"Entering Jump state: y velocity is {animParam}");
-        //player.PlayerAnimator.SetBool(animParam, true);
-        // Implement jump logic here
-        // For example, you can apply an upward force to the player's Rigidbody2D
-        //player.PhysicalBody.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); // Adjust the force as needed
+        Debug.Log($"Entering InitialJump state: y velocity is {animParam}");
+        
+        //Enter into the Jump/Fall blend tree by setting the isJumping parameter to true
         player.PlayerAnimator.SetBool("isJumping", true);
-        player.SetVelocity(player.PhysicalBody.linearVelocity.x, player.JumpForce);
+        player.JumpCoordinator.InitialJump();
+        player.IsJumping = true;
     }
     public override void Update()
     {
         base.Update();
+
         if (player.PhysicalBody.linearVelocity.y < 0)
         {
             // Transition to Fall state if the player is grounded
@@ -31,11 +31,11 @@ public class PlayerJumpState : CharacterState
             controller.ChangeState(player.Fall);
         }
 
+        player.JumpCoordinator.JumpButtonHold();
     }
 
     public override void Exit()
     {
         base.Exit();
-        //player.PlayerAnimator.SetBool("isJumping", false);
     }
 }

@@ -25,6 +25,7 @@ public class PlayerFallState : CharacterState
         {
             Debug.Log("Player is grounded, transitioning to Idle state.");
             player.PlayerAnimator.SetBool("isJumping", false);
+            player.IsJumping = false;
             controller.ChangeState(player.Idle);
         }
         //if player is grounded, transition to idle state
